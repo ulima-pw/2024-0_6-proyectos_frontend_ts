@@ -1,32 +1,18 @@
 import { Container } from "@mui/material"
-import { useState } from "react"
 import FormularioLogin from "./components/FormularioLogin"
+import useLoginViewModel from "../../viewmodels/LoginViewModel"
 
 const LoginPage = () => {
-    const [username, setUsername] = useState<string | null>(null)
-    const [password, setPassword] = useState<string>("")
-    const [loginIncorrecto, setLoginIncorrecto] = useState<boolean>(false)
-
-    const usernameOnChangeHandler = (event : React.ChangeEvent<HTMLInputElement>) => {
-        setUsername(event.currentTarget.value)
-    }
-
-    const passwordOnChangeHandler = (event : React.ChangeEvent<HTMLInputElement>) => {
-        setPassword(event.currentTarget.value)
-    }
-
-    const loginOnClick = () => {
-        console.log("Debera comunicarse con el backend")
-    }
+    const loginViewModel = useLoginViewModel()
 
     return <Container maxWidth="sm">
         <FormularioLogin 
-            username={ username }
-            password={ password }
-            loginIncorrecto={ loginIncorrecto }
-            usernameOnChangeHandler={ usernameOnChangeHandler }
-            passwordOnChangeHandler={ passwordOnChangeHandler }
-            loginOnClick={ loginOnClick } />
+            username={ loginViewModel.username }
+            password={ loginViewModel.password }
+            loginIncorrecto={ loginViewModel.loginIncorrecto }
+            usernameOnChangeHandler={ loginViewModel.usernameOnChangeHandler }
+            passwordOnChangeHandler={ loginViewModel.passwordOnChangeHandler }
+            loginOnClick={ loginViewModel.loginOnClick } />
     </Container>
 }
 
