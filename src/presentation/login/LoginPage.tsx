@@ -1,6 +1,6 @@
-import { Alert, Box, Button, Container, TextField } from "@mui/material"
-import CheckIcon from "@mui/icons-material/Check"
+import { Container } from "@mui/material"
 import { useState } from "react"
+import FormularioLogin from "./components/FormularioLogin"
 
 const LoginPage = () => {
     const [username, setUsername] = useState<string | null>(null)
@@ -20,49 +20,13 @@ const LoginPage = () => {
     }
 
     return <Container maxWidth="sm">
-        <Box component="form"
-            noValidate
-            autoComplete="off"
-            style={ { textAlign : "center" }}>
-            
-            <h1>Login</h1>
-            <div>
-                <TextField required
-                    label="Username"
-                    margin="normal"
-                    value={ username == null ? "" : username }
-                    onChange={ usernameOnChangeHandler }/>
-            </div>
-            <div>
-                <TextField required
-                    type="password"
-                    label="Password"
-                    margin="normal"
-                    value={ password }
-                    onChange={ passwordOnChangeHandler }/>
-            </div>
-            <div>
-                <Button variant="contained" 
-                    style={ { marginRight : "8px" }}
-                    onClick={ loginOnClick }>
-                    Login
-                </Button>
-                <Button variant="contained">Registro</Button>
-            </div>
-            {
-                (() => {
-                    if (loginIncorrecto) {
-                        return <Alert 
-                            icon={<CheckIcon fontSize="inherit" />} 
-                            severity="error"
-                            sx={ { mt : 2 } }>
-                            Error en el login.
-                        </Alert>
-                    }
-                })()
-            }
-            
-        </Box>
+        <FormularioLogin 
+            username={ username }
+            password={ password }
+            loginIncorrecto={ loginIncorrecto }
+            usernameOnChangeHandler={ usernameOnChangeHandler }
+            passwordOnChangeHandler={ passwordOnChangeHandler }
+            loginOnClick={ loginOnClick } />
     </Container>
 }
 
