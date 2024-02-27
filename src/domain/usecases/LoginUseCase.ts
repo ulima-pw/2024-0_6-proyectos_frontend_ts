@@ -1,3 +1,4 @@
+import UsuarioRepository from "../../data/repositories/UsuarioRepository";
 import UsuarioType from "../entities/Usuario";
 
 interface LoginUseCaseReturnType {
@@ -6,7 +7,25 @@ interface LoginUseCaseReturnType {
 }
 
 const loginUseCase = async (usuario : UsuarioType) : Promise<LoginUseCaseReturnType> => {
-    const response = await fetch("http://localhost:8000/proyectos/login-json", {
+    const respository = UsuarioRepository()
+
+    const resp = await respository.login(usuario)
+
+    if (resp.msg == "") {
+        sessionStorage.setItem("USERNAME", usuario.username == null ? "" : usuario.username)
+
+        return {
+            username : usuario.username,
+            msg : ""
+        }
+    }else {
+        return {
+            msg : resp.msg,
+            username : null
+        }
+    }
+
+    /*const response = await fetch("http://localhost:8000/proyectos/login-json", {
         method : "post",
         body : JSON.stringify({
             username : usuario.username,
@@ -30,7 +49,7 @@ const loginUseCase = async (usuario : UsuarioType) : Promise<LoginUseCaseReturnT
             msg : "Login incorrecto",
             username : null
         }
-    }
+    }*/
 
 }
 
