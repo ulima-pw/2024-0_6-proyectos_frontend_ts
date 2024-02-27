@@ -1,6 +1,6 @@
 interface UsuarioType {
     id? : number
-    nombre : string
+    nombre? : string
     username : string
     password : string
 }

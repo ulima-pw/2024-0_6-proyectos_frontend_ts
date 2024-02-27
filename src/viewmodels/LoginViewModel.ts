@@ -1,4 +1,6 @@
 import { useState } from "react"
+import UsuarioType from "../domain/entities/Usuario"
+import loginUseCase from "../domain/usecases/LoginUseCase"
 
 const LoginViewModel = () => {
     const [username, setUsername] = useState<string | null>(null)
@@ -14,25 +16,19 @@ const LoginViewModel = () => {
     }
 
     const loginOnClick = async () => {
-        const dataUsername = {
+        if ( username == null) return
+
+        const usuario : UsuarioType =  {
             username : username,
             password : password
         }
+        const resp = await loginUseCase(usuario)
 
-        const response = await fetch("http://localhost:8000/proyectos/login-json", {
-            method : "post",
-            body : JSON.stringify(dataUsername)
-        })
-        const data = await response.json()
-
-        if (data.msg === "") {
+        if (resp.msg == "") {
             // Login correcto
-            // Almacenando en localStorage
-            sessionStorage.setItem("USERNAME", username == null ? "" : username)
-
             /*navigate("/main", {
                 state : {
-                    username : username
+                    username : resp.username
                 }
             })*/
         } else {
